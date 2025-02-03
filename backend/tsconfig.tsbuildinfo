@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/prisma.ts","./src/controller/userController.ts","./src/routes/signin.ts","./src/routes/signup.ts","./src/zod/userSchema.ts"],"version":"5.7.3"}

@@ -3,10 +3,10 @@ import { postSchema } from "../zod/postSchema";
 import { prisma } from "../prisma";
 
 
-
-
 export async function updateBlogController(req: Request, res: Response) {
     const parsedInput = postSchema.safeParse(req.body);
+    const blogId = req.params.blogId;
+    console.log("Blog id is =", blogId);
 
     if (!parsedInput.success) {
         res.status(404).json({
@@ -15,9 +15,10 @@ export async function updateBlogController(req: Request, res: Response) {
         return;
     }
 
+
     const postExist = await prisma.post.findFirst({
         where: {
-            id: req.body.id,
+            id: blogId
         }
     })
 
@@ -30,7 +31,7 @@ export async function updateBlogController(req: Request, res: Response) {
 
     const blog = await prisma.post.update({
         where: {
-            id: req.body.id,
+            id: blogId,
             authorId: req.user?.id,
         },
         data: {
@@ -51,8 +52,5 @@ export async function updateBlogController(req: Request, res: Response) {
         blog
     })
     return;
-
-
-
 
 }

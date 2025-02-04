@@ -6,5 +6,5 @@ const postBlogController_1 = require("../routes/postBlogController");
 const updateBlogController_1 = require("../routes/updateBlogController");
 const postRouter = (0, express_1.Router)();
 postRouter.post("/blog", authenticator_1.authentication, postBlogController_1.postBlogController);
-postRouter.put("/blog/update", authenticator_1.authentication, updateBlogController_1.updateBlogController);
+postRouter.put("/blog/update/:blogId", authenticator_1.authentication, updateBlogController_1.updateBlogController);
 exports.default = postRouter;

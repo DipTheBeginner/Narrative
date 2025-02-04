@@ -7,7 +7,7 @@ import { updateBlogController } from "../routes/updateBlogController";
 const postRouter = Router();
 
 postRouter.post("/blog", authentication, postBlogController);
-postRouter.put("/blog/update",authentication,updateBlogController);
+postRouter.put("/blog/update/:blogId",authentication,updateBlogController);
 
 
 

@@ -8,4 +8,5 @@ const zod_1 = __importDefault(require("zod"));
 exports.userSchema = zod_1.default.object({
     email: zod_1.default.string(),
     password: zod_1.default.string(),
+    name: zod_1.default.string(),
 });

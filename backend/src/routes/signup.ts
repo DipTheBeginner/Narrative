@@ -7,7 +7,7 @@ export async function signUpController(req: Request, res: Response) {
     const parsedInput = userSchema.safeParse(req.body);
 
     if (!parsedInput.success) {
-         res.status(404).json({
+        res.status(404).json({
             msg: "Invalid Credentials"
         })
         return;
@@ -15,6 +15,7 @@ export async function signUpController(req: Request, res: Response) {
 
     const email = req.body.email;
     const password = req.body.password;
+    const name = req.body.name;
 
     const existingUser = await prisma.user.findUnique({
         where: {
@@ -23,7 +24,7 @@ export async function signUpController(req: Request, res: Response) {
     })
 
     if (existingUser) {
-         res.status(404).json({
+        res.status(404).json({
             msg: "User already exists"
         })
         return;
@@ -33,12 +34,20 @@ export async function signUpController(req: Request, res: Response) {
         data: {
             email,
             password,
+            name,
         }
     })
 
-    const token = jwt.sign({ id: user.id }, "secret");
+    console.log("User created is =", user);
 
-     res.status(202).json({
+    const tokenValue = {
+        id: user.id,
+        name: user.name,
+    }
+
+    const token = jwt.sign(tokenValue, "secret");
+
+    res.status(202).json({
         msg: "User Created success",
         jwt: token
     })

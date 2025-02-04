@@ -27,6 +27,7 @@ function signUpController(req, res) {
         }
         const email = req.body.email;
         const password = req.body.password;
+        const name = req.body.name;
         const existingUser = yield prisma_1.prisma.user.findUnique({
             where: {
                 email: email,
@@ -42,9 +43,15 @@ function signUpController(req, res) {
             data: {
                 email,
                 password,
+                name,
             }
         });
-        const token = jsonwebtoken_1.default.sign({ id: user.id }, "secret");
+        console.log("User created is =", user);
+        const tokenValue = {
+            id: user.id,
+            name: user.name,
+        };
+        const token = jsonwebtoken_1.default.sign(tokenValue, "secret");
         res.status(202).json({
             msg: "User Created success",
             jwt: token

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { postSchema } from "../zod/postSchema";
 import { prisma } from "../prisma";
+import { postSchema } from "@dipthebeginner/narrative-common";
 
 
 export async function postBlogController(req: Request, res: Response) {

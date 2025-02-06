@@ -1,0 +1,26 @@
+import { z } from 'zod';
+export declare const postSchema: z.ZodObject<{
+    title: z.ZodString;
+    content: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    title: string;
+    content: string;
+}, {
+    title: string;
+    content: string;
+}>;
+export type postSchema = z.infer<typeof postSchema>;
+export declare const userSchema: z.ZodObject<{
+    email: z.ZodString;
+    password: z.ZodString;
+    name: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    email: string;
+    password: string;
+    name: string;
+}, {
+    email: string;
+    password: string;
+    name: string;
+}>;
+export type userSchema = z.infer<typeof userSchema>;

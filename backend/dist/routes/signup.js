@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpController = signUpController;
 const prisma_1 = require("../prisma");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const userSchema_1 = require("../zod/userSchema");
+const narrative_common_1 = require("@dipthebeginner/narrative-common");
 function signUpController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const parsedInput = userSchema_1.userSchema.safeParse(req.body);
+        const parsedInput = narrative_common_1.userSchema.safeParse(req.body);
         if (!parsedInput.success) {
             res.status(404).json({
                 msg: "Invalid Credentials"

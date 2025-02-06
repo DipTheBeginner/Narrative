@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { userSchema } from "../zod/userSchema";
 import { prisma } from "../prisma";
 import jwt from "jsonwebtoken";
+import { userSchema } from "@dipthebeginner/narrative-common";
 
 
 

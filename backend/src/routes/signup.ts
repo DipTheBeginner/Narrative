@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma";
 import jwt from "jsonwebtoken";
-import { userSchema } from "../zod/userSchema";
+import { userSchema } from "@dipthebeginner/narrative-common";
 
 export async function signUpController(req: Request, res: Response) {
     const parsedInput = userSchema.safeParse(req.body);

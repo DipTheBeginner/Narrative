@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postBlogController = postBlogController;
-const postSchema_1 = require("../zod/postSchema");
 const prisma_1 = require("../prisma");
+const narrative_common_1 = require("@dipthebeginner/narrative-common");
 function postBlogController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         console.log("req user is ", req.user);
-        const parsedInput = postSchema_1.postSchema.safeParse(req.body);
+        const parsedInput = narrative_common_1.postSchema.safeParse(req.body);
         if (!parsedInput.success) {
             res.status(404).json({
                 msg: "Invalid Post"

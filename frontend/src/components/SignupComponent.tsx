@@ -1,21 +1,21 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import InputBox from "./InputBox";
+import { Link } from "react-router-dom"
 import Button from "./Button";
 import axios from "axios";
+import { signupSchema } from "@dipthebeginner/narrative-common";
 
 export const SignupComponent = () => {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [postInputs, setPostInputs] = useState<signupSchema>({
+        name: "",
+        email: "",
+        password: ""
+    })
 
+    async function handleSubmit() {
+        const response = await axios.post("http://localhost:3000/api/v1/user/signup", postInputs)
 
-    async function handleSubmit(){
-        const response=await axios.post("http://localhost:3000/api/v1/user/signup",{
-            name,email,password
-        })
         console.log(response.data);
-        
+
     }
 
     return <div className="h-screen flex justify-center flex-col">
@@ -29,14 +29,46 @@ export const SignupComponent = () => {
                     <Link className="pl-2 underline" to={"/signin"}>Login</Link>
                 </div>
                 <div className="mt-4">
-                    <InputBox changeHandler={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} placeholder="Enter your name" label="Name" />
-                    <InputBox  changeHandler={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder="Email" label="Email" />
-                    <InputBox type='true' changeHandler={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} placeholder="password" label="Password" />
+                    <InputBox label="Username" placeholder="Enter your name" changeHandler={(e) => {
+                        setPostInputs({
+                            ...postInputs,
+                            name: e.target.value
+                        })
+                    }} />
+                    <InputBox label="Passowrd" placeholder="*********" changeHandler={(e) => {
+                        setPostInputs({
+                            ...postInputs,
+                            password: e.target.value
+                        })
+                    }} />
+                    <InputBox label="Email" placeholder="Enter your email" changeHandler={(e) => {
+                        setPostInputs({
+                            ...postInputs,
+                            email: e.target.value
+                        })
+                    }} />
                     <Button submitHandler={handleSubmit}>Submit</Button>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
+}
+
+
+interface InputBoxProps {
+    placeholder: string,
+    label: string,
+    changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+    type?: string
+}
+
+export default function InputBox({ placeholder, label, changeHandler, type }: InputBoxProps) {
+    return (
+        <div className=" flex flex-col mb-2 ">
+            <label htmlFor="">{label}</label>
+            <input type={`${type ? 'password' : 'text'}`} className=" border-2 rounded-md px-2 py-1" onChange={changeHandler} placeholder={placeholder} />
+        </div>
+    )
 }
 
 

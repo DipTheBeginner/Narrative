@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma";
 import jwt from "jsonwebtoken";
-import { userSchema } from "@dipthebeginner/narrative-common";
+import { signupSchema} from "@dipthebeginner/narrative-common";
 
 export async function signUpController(req: Request, res: Response) {
-    const parsedInput = userSchema.safeParse(req.body);
+    const parsedInput = signupSchema.safeParse(req.body);
 
     if (!parsedInput.success) {
         res.status(404).json({

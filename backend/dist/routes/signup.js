@@ -18,7 +18,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const narrative_common_1 = require("@dipthebeginner/narrative-common");
 function signUpController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const parsedInput = narrative_common_1.userSchema.safeParse(req.body);
+        const parsedInput = narrative_common_1.signupSchema.safeParse(req.body);
         if (!parsedInput.success) {
             res.status(404).json({
                 msg: "Invalid Credentials"

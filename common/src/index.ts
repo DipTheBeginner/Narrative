@@ -8,13 +8,23 @@ export const postSchema = z.object({
 export type postSchema=z.infer<typeof postSchema>
 
 
-export const userSchema = z.object({
+export const signupSchema = z.object({
     email: z.string(),
     password: z.string(),
     name:z.string(),
 });
 
-export type userSchema=z.infer<typeof userSchema>
+
+
+export type signupSchema=z.infer<typeof signupSchema>
+
+
+export const  signinSchema=z.object({
+    email:z.string(),
+    password:z.string(),
+})
+
+export type signinSchema=z.infer<typeof signinSchema>
 
 
 

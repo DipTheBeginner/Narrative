@@ -18,7 +18,8 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const narrative_common_1 = require("@dipthebeginner/narrative-common");
 function signInController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const parsedInput = narrative_common_1.userSchema.safeParse(req.body);
+        const parsedInput = narrative_common_1.signinSchema.safeParse(req.body);
+        console.log("parsed input is=", parsedInput);
         if (!parsedInput.success) {
             res.status(404).json({
                 msg: "Invalid Credentials"
@@ -26,9 +27,9 @@ function signInController(req, res) {
             return;
         }
         const body = req.body;
-        const user = yield prisma_1.prisma.user.findUnique({
+        const user = yield prisma_1.prisma.user.findFirst({
             where: {
-                email: body.email
+                email: body.email,
             }
         });
         if (!user) {
@@ -37,11 +38,16 @@ function signInController(req, res) {
             });
             return;
         }
+        if (user.password != body.password) {
+            res.status(404).json({
+                msg: "password is wrong"
+            });
+        }
         else {
             const token = jsonwebtoken_1.default.sign({ id: user.id }, "secret");
             res.json({
                 msg: "user found",
-                jwt: token
+                token,
             });
             return;
         }

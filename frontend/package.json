@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dipthebeginner/narrative-common": "^1.0.0",
+    "@dipthebeginner/narrative-common": "^1.0.2",
     "@tailwindcss/vite": "^4.0.4",
     "axios": "^1.7.9",
     "react": "^19.0.0",

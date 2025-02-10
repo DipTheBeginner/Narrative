@@ -1,60 +1,57 @@
-import { useEffect, useState } from "react"
-import { BlogComponent } from "../components/BlogComponent"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import { BlogComponent } from "../components/BlogComponent";
+import axios from "axios";
 
-interface postProps{
-    author:string,
-    title:string,
-    content:string,
-    publishedDate:string,
+interface BlogType {
+    author: string;
+    title: string;
+    content: string;
 }
 
-export const Blogs=()=>{
+export const Blogs = () => {
+    const [posts, setPosts] = useState<BlogType[]>([]);
 
-    const[post,setPost]=useState<postProps>({
-        author:"",
-        title:"",
-        content:"",
-        publishedDate:""
-    })
+    const [loading, setLoading] = useState(true);
 
-    const [loading,setLoading]=useState(true);
-
-
-    useEffect(()=>{
-        const fetchBlog=async ()=>{
-            try{
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
                 setLoading(true);
+                const tokens = localStorage.getItem("token");
 
-                const response=await axios.get<postProps>("http://localhost:3000/post/:blogId");
-                setPost(response.data);
+                if (!tokens) return;
 
-            }finally{
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/post/blog/getAll",
+                    {
+                        headers: {
+                            authorization: `Bearer ${tokens}`,
+                        },
+                    }
+                );
+                setPosts(response.data.blogs);
+                
+            } finally {
                 setLoading(false);
             }
-
-        }
+        };
 
         fetchBlog();
-    },[])
+    }, []);
 
-    if(loading){
-        return (
-            <div>
-                Loadinggggg....
-            </div>
-        )
+    if (loading) {
+        return <div>Loadin....</div>;
     }
 
-
-    
-
-    return(
-        
+    return (
         <div className="max-w-xl flex justify-center flex-col">
-            
-            <BlogComponent authorName={post.author} title={post.title} content={post.content} publishedDate={post.publishedDate}/>
-            
+            {posts.map((post) => (
+                <BlogComponent
+                    authorName={post.author}
+                    title={post.title}
+                    content={post.content}
+                />
+            ))}
         </div>
-    )
-}
+    );
+};

@@ -6,7 +6,7 @@ export const Signin = () => {
     return <div>
         <div className="grid grid-cols-2">
             <div>
-                <SigninComponent/>
+                <SigninComponent />
             </div>
             <div className="invisible lg:visible">
                 <Quote />

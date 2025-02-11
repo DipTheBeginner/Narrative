@@ -14,16 +14,19 @@ export function authentication(req: Request, res: Response, next: NextFunction) 
 
     try {
 
+
         const token = authHeader.split(" ")[1];
         const decoded = jwt.verify(token, "secret");
         if(!decoded){
             res.status(404).json({
                 msg:"User is not authorized"
             })
+
             return;
         }
-        console.log("decode is =", decoded);
         req.user=decoded as authUser;
+
+        console.log("decode is ",decoded);
         next();
         return;
         

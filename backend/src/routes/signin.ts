@@ -22,21 +22,24 @@ export async function signInController(req: Request, res: Response) {
         }
     })
 
+    
     if (!user) {
         res.status(404).json({
             msg: "NOT FOUND"
         })
         return;
     }
-
+    
     if(user.password!=body.password){
         res.status(404).json({
             msg:"password is wrong"
         })
+        return;
     }
-
+    
     else {
-        const token = jwt.sign({ id: user.id }, "secret");
+        console.log("USer ",user);
+        const token = jwt.sign({ id: user.id}, "secret");
         res.json({
             msg: "user found",
             token,

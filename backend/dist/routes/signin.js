@@ -44,6 +44,7 @@ function signInController(req, res) {
             });
         }
         else {
+            console.log("USer ", user);
             const token = jsonwebtoken_1.default.sign({ id: user.id }, "secret");
             res.json({
                 msg: "user found",

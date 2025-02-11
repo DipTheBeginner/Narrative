@@ -22,8 +22,8 @@ function authentication(req, res, next) {
             });
             return;
         }
-        console.log("decode is =", decoded);
         req.user = decoded;
+        console.log("decode is ", decoded);
         next();
         return;
     }

@@ -3,7 +3,7 @@ import { BlogComponent } from "../components/BlogComponent";
 import axios from "axios";
 
 interface BlogType {
-    author: string;
+    // author: string
     title: string;
     content: string;
 }
@@ -47,7 +47,7 @@ export const Blogs = () => {
         <div className="max-w-xl flex justify-center flex-col">
             {posts.map((post) => (
                 <BlogComponent
-                    authorName={post.author}
+                    // authorName={post.author}
                     title={post.title}
                     content={post.content}
                 />

@@ -1,11 +1,11 @@
 interface BlogComponentProps {
-  authorName: string;
+  // authorName: string;
   title: string;
   content: string;
 }
 
 export const BlogComponent = ({
-  authorName,
+  // authorName,
   title,
   content,
 }: BlogComponentProps) => {

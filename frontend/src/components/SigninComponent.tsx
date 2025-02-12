@@ -28,7 +28,7 @@ export const SigninComponent = () => {
 
                 localStorage.setItem("token", (response.data.token));
 
-                navigate("/blogs")
+                navigate("/blog/getAll")
             }
 
 

@@ -42,6 +42,7 @@ function signInController(req, res) {
             res.status(404).json({
                 msg: "password is wrong"
             });
+            return;
         }
         else {
             console.log("USer ", user);

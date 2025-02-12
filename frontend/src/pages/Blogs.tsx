@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { BlogComponent } from "../components/BlogComponent";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 interface BlogType {
     // author: string
@@ -12,6 +15,14 @@ export const Blogs = () => {
     const [posts, setPosts] = useState<BlogType[]>([]);
 
     const [loading, setLoading] = useState(true);
+    const navigate=useNavigate();
+
+
+    async function toCreatePost(){
+
+        navigate("/blog");
+
+    }
 
     useEffect(() => {
         const fetchBlog = async () => {
@@ -52,6 +63,10 @@ export const Blogs = () => {
                     content={post.content}
                 />
             ))}
+
+            <button onClick={toCreatePost}>Create new post</button>
         </div>
+
+        
     );
 };

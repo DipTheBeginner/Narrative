@@ -3,70 +3,89 @@ import { BlogComponent } from "../components/BlogComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
-
 interface BlogType {
-    // author: string
-    title: string;
-    content: string;
+  title: string;
+  content: string;
 }
 
 export const Blogs = () => {
-    const [posts, setPosts] = useState<BlogType[]>([]);
+  const [posts, setPosts] = useState<BlogType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(true);
-    const navigate=useNavigate();
+  async function toCreatePost() {
+    navigate("/blog");
+  }
 
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setLoading(true);
+        const tokens = localStorage.getItem("token");
 
-    async function toCreatePost(){
+        if (!tokens) return;
 
-        navigate("/blog");
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/post/blog/getAll",
+          {
+            headers : {
+              authorization: `Bearer ${tokens}`,
+            },
+          }
+        );
+        setPosts(response.data.blogs);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    }
+    fetchBlog();
+  }, []);
 
-    useEffect(() => {
-        const fetchBlog = async () => {
-            try {
-                setLoading(true);
-                const tokens = localStorage.getItem("token");
-
-                if (!tokens) return;
-
-                const response = await axios.get(
-                    "http://localhost:3000/api/v1/post/blog/getAll",
-                    {
-                        headers: {
-                            authorization: `Bearer ${tokens}`,
-                        },
-                    }
-                );
-                setPosts(response.data.blogs);
-                
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchBlog();
-    }, []);
-
-    if (loading) {
-        return <div>Loadin....</div>;
-    }
-
+  if (loading) {
     return (
-        <div className="max-w-xl flex justify-center flex-col">
-            {posts.map((post) => (
-                <BlogComponent
-                    // authorName={post.author}
-                    title={post.title}
-                    content={post.content}
-                />
-            ))}
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="h-4 w-24 bg-gray-200 rounded mb-4"></div>
+          <div className="text-gray-500">Loading posts...</div>
+        </div>
+      </div>
+    );
+  }
 
-            <button onClick={toCreatePost}>Create new post</button>
+  return (
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Blog Posts</h1>
+          <button
+            onClick={toCreatePost}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg 
+                     shadow-sm transition-colors duration-200 flex items-center gap-2"
+          >
+            <span className="text-lg">+</span>
+            Create Post
+          </button>
         </div>
 
-        
-    );
+        {posts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No posts yet. Create your first post!</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {posts.map((post, index) => (
+              <BlogComponent
+                key={index}
+                title={post.title}
+                content={post.content}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
+
+export default Blogs;

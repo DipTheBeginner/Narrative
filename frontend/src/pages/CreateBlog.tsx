@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface BlogProps {
     title: string;
@@ -11,6 +12,8 @@ export const CreateBlog = () => {
         title: "",
         content: "",
     });
+    const navigate=useNavigate();
+
     async function handlePost() {
         const token = localStorage.getItem("token");
 
@@ -29,6 +32,8 @@ export const CreateBlog = () => {
                 }
             }
         );
+
+        navigate("/blog/getAll");
 
         console.log("Blog posted successfully", response.data);
     }

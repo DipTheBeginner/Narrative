@@ -39,7 +39,7 @@ export const CreateBlog = () => {
     }
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+        <div className=" w-5/12 mx-auto p-6 bg-white shadow-md rounded-lg absolute">
             <h2 className="text-xl font-semibold mb-4">Create a Blog</h2>
             <input
                 type="text"
